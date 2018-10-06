@@ -14,7 +14,7 @@ import javax.swing.event.*;
 import javax.imageio.*;
 import javax.sound.sampled.*;
 
-public class JaySong {
+public class Potatoshop {
    
    private static JPanel container = new JPanel(); 
    private static JFrame frame = new JFrame();

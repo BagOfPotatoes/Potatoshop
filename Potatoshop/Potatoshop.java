@@ -13,7 +13,6 @@ import java.awt.image.*;
 import java.io.*;
 import javax.swing.event.*;
 import javax.imageio.*;
-import javax.sound.sampled.*;
 
 public class Potatoshop {
 

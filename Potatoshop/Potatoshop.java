@@ -92,10 +92,7 @@ public class Potatoshop {
         frame.setSize(1200, 1000);
         frame.setResizable(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        sound = new File("meme.WAV");
-        playSound(sound);
-
+ 
         try {
             f = new File("potate.png"); //default image
             image = new BufferedImage(1000, 1000, BufferedImage.TYPE_INT_ARGB);

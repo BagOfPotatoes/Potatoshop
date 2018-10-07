@@ -92,7 +92,7 @@ public class Potatoshop {
         frame.setSize(1200, 1000);
         frame.setResizable(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
- 
+
         try {
             f = new File("potate.png"); //default image
             image = new BufferedImage(1000, 1000, BufferedImage.TYPE_INT_ARGB);
@@ -360,17 +360,6 @@ public class Potatoshop {
                 label1.setIcon(imageIcon);
                 container.setBackground(col);
             }
-        }
-    }
-
-    public static void playSound(File sound) {
-
-        try {
-            Clip clip = AudioSystem.getClip();
-            clip.open(AudioSystem.getAudioInputStream(sound)); //hehe bootup sound
-            clip.start();
-        } catch (Exception e) {
-            System.out.println("Sound did not play " + e);
         }
     }
 }

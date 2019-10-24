@@ -3,7 +3,7 @@
  * Potatoshop application
  *
  * @notJays
- * @version 3.00 2018/4/20
+ * @version 3.00 2017/4/20
  */
 import javax.swing.*;
 import java.awt.*;

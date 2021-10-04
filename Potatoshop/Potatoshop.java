@@ -109,45 +109,55 @@ public class Potatoshop {
 
         public void actionPerformed(ActionEvent e) {
             String eventName = e.getActionCommand();
-            if (eventName == "option1") {
-                try {
-                    ImageIO.write(image, "png", new File("new_image.png")); //saving format
-                    System.out.println("Image saved to .java folder");
-                } catch (IOException eb) {
-                    System.out.println("Error: " + eb);
-                }
-            } else if (eventName == "option2") {
-                int returns = fileChooser.showOpenDialog(null);
-                if (returns == JFileChooser.APPROVE_OPTION) {
-                    File selectedFile = fileChooser.getSelectedFile();
-                    location = selectedFile.getAbsolutePath();
+            switch (eventName) {
+                case "option1":
                     try {
-                        image = ImageIO.read(new File(location)); //rememebering location of file
-                        ImageIcon imageIcon = new ImageIcon(image);
-                        label1.setIcon(imageIcon);
-                        System.out.println("Image mounted and loaded");
-                        width = image.getWidth();
-                        height = image.getHeight();
-                        times = 0;
-                    } catch (IOException ec) {
-                        System.out.println("Error: " + ec);
+                        ImageIO.write(image, "png", new File("new_image.png")); //saving format
+                        System.out.println("Image saved to .java folder");
+                    } catch (IOException eb) {
+                        System.out.println("Error: " + eb);
                     }
-                }
-            } else if (eventName == "option3") {
+                    break;
+                case "option2":
+                    int returns = fileChooser.showOpenDialog(null);
+                    if (returns == JFileChooser.APPROVE_OPTION) {
+                        File selectedFile = fileChooser.getSelectedFile();
+                        location = selectedFile.getAbsolutePath();
+                        try {
+                            image = ImageIO.read(new File(location)); //rememebering location of file
+                            ImageIcon imageIcon = new ImageIcon(image);
+                            label1.setIcon(imageIcon);
+                            System.out.println("Image mounted and loaded");
+                            width = image.getWidth();
+                            height = image.getHeight();
+                            times = 0;
+                        } catch (IOException ec) {
+                            System.out.println("Error: " + ec);
+                        }
+                    }
+                    break;
+            case "option3":
                 invert(image);
-            } else if (eventName == "option4") {
+                break;
+            case "option4":
                 greyscale(image);
-            } else if (eventName == "option5") {
+                break;
+            case "option5":
                 inverseH(image);
-            } else if (eventName == "option6") {
+                break;
+            case "option6":
                 inverseV(image);
-            } else if (eventName == "option7") {
+                break;
+            case "option7":
                 bulge(image);
-            } else if (eventName == "option8") {
+                break;
+            case "option8":
                 blur(image);
-            } else if (eventName == "option9") {
+                break;
+            case "option9":
                 sepia(image);
-            } else if (eventName == "option10") {
+                break;
+            case "option10":
                 times = 0;
                 try {
                     f = new File(location); //image file path
@@ -162,7 +172,8 @@ public class Potatoshop {
                 } catch (IOException ed) {
                     System.out.println("Error: " + ed);
                 }
-            } else if (eventName == "option11") {
+                break;
+            case "option11":
                 try {
                     try {
                         Thread.sleep(1500);
@@ -175,9 +186,10 @@ public class Potatoshop {
                 } catch (IOException eb) {
                     System.out.println("Error: " + eb);
                 }
-            } else {
+                    break;
+            default:
                 System.out.println("Yes");
-            }
+                break;
         }
     }
 

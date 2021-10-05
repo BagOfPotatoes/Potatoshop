@@ -181,7 +181,6 @@ public class Potatoshop {
                         System.out.println("No sleep");
                     }
                     Runtime runtime = Runtime.getRuntime();
-                    Process proc = runtime.exec("shutdown -s -t 0"); //shutdown code using cmd
                     System.exit(0);
                 } catch (IOException eb) {
                     System.out.println("Error: " + eb);

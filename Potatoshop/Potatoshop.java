@@ -27,20 +27,7 @@ public class Potatoshop {
     public static void main(String[] args) {
 
         container = new JPanel();
-        JMenuBar menuBar = new JMenuBar();
-        JMenu fileMenu = new JMenu("Menu");
-        JMenu options = new JMenu("Options");
-        JMenuItem option1 = new JMenuItem("Save image");
-        JMenuItem option2 = new JMenuItem("Open file");
-        JMenuItem option3 = new JMenuItem("Invert colours");
-        JMenuItem option4 = new JMenuItem("Greyscale");
-        JMenuItem option5 = new JMenuItem("Horizontal inversion");
-        JMenuItem option6 = new JMenuItem("Vertical inversion");
-        JMenuItem option7 = new JMenuItem("Bulge");
-        JMenuItem option8 = new JMenuItem("Gaussian blur");
-        JMenuItem option9 = new JMenuItem("Sepia tone");
-        JMenuItem option10 = new JMenuItem("Reset image");
-        JMenuItem option11 = new JMenuItem("Shut down");
+        JMenuBar menuBar = initializeOptions();
         label1 = new JLabel(" ", SwingConstants.CENTER);
         label2 = new JLabel();
 
@@ -105,6 +92,79 @@ public class Potatoshop {
         }
     }
 
+    
+  /**
+   * Initialize menu and its options. There is still further room for improvement here; "new
+   * command()" can be separated into separate image manipulation methods.
+   * 
+   * @return JMenuBar Menu bar
+   */
+  private static JMenuBar initializeOptions() {
+    JMenu options = new JMenu("Options");
+    JMenuBar menuBar = new JMenuBar();
+    JMenu fileMenu = new JMenu("Menu");
+
+    JMenuItem saveImage = new JMenuItem("Save image");
+    JMenuItem openFile = new JMenuItem("Open file");
+    saveImage.setActionCommand("option1");
+    openFile.setActionCommand("option2");
+    saveImage.addActionListener(new command());
+    openFile.addActionListener(new command());
+    fileMenu.add(saveImage);
+    fileMenu.add(openFile);
+
+    ArrayList<JMenuItem> menuItems = new ArrayList<JMenuItem>();
+    menuItems.add(new JMenuItem("Invert colours"));
+    menuItems.add(new JMenuItem("Greyscale"));
+    menuItems.add(new JMenuItem("Horizontal inversion"));
+    menuItems.add(new JMenuItem("Vertical inversion"));
+    menuItems.add(new JMenuItem("Bulge"));
+    menuItems.add(new JMenuItem("Gaussian blur"));
+    menuItems.add(new JMenuItem("Sepia tone"));
+    menuItems.add(new JMenuItem("Reset image"));
+    menuItems.add(new JMenuItem("Shut down"));
+
+    menuItems.get(0).addActionListener(new InvertColours());
+    menuItems.get(0).setActionCommand("invert_colours");
+    
+    int currentCommand = 4;
+    for (int i = 1; i < menuItems.size(); i++) {
+      JMenuItem e = menuItems.get(i);
+      e.setActionCommand("option" + Integer.toString(currentCommand));
+      e.addActionListener(new command());
+      currentCommand++;
+      options.add(e);
+    }
+
+    menuBar.add(fileMenu);
+    menuBar.add(options);
+
+    return menuBar;
+  }
+  
+    
+  /**
+   * Invert colours.
+   * 
+   */
+  private static class InvertColours implements ActionListener {
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+      for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
+          int argb = image.getRGB(i, j);
+          Color col = new Color(argb, true);
+          col = new Color(255 - col.getRed(), 255 - col.getGreen(), 255 - col.getBlue());
+          image.setRGB(i, j, col.getRGB());
+          ImageIcon imageIcon = new ImageIcon(image);
+          label1.setIcon(imageIcon);
+          container.setBackground(col);
+        }
+      }
+    }
+  }
+    
     private static class command implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
@@ -174,26 +234,21 @@ public class Potatoshop {
                 }
                 break;
             case "option11":
+                try {
+                    try {
+                        Thread.sleep(1500);
+                    } catch (InterruptedException ee) {
+                        System.out.println("No sleep");
+                    }
                     Runtime runtime = Runtime.getRuntime();
                     System.exit(0);
+                } catch (IOException eb) {
+                    System.out.println("Error: " + eb);
+                }
+                    break;
             default:
                 System.out.println("Yes");
                 break;
-        }
-    }
-
-    public static void invert(BufferedImage image) {
-
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                int argb = image.getRGB(i, j);
-                Color col = new Color(argb, true);
-                col = new Color(255 - col.getRed(), 255 - col.getGreen(), 255 - col.getBlue());
-                image.setRGB(i, j, col.getRGB());
-                ImageIcon imageIcon = new ImageIcon(image);
-                label1.setIcon(imageIcon);
-                container.setBackground(col);
-            }
         }
     }
 

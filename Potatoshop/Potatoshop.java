@@ -89,7 +89,12 @@ public class Potatoshop {
     menuItems.add(new JMenuItem("Reset image"));
     menuItems.add(new JMenuItem("Shut down"));
 
-    int currentCommand = 3;
+    menuItems.get(0).addActionListener(new InvertColours());
+    menuItems.get(0).setActionCommand("invert_colours");
+    menuItems.get(1).addActionListener(new Grayscale());
+    menuItems.get(1).setActionCommand("grayscale");
+    
+    int currentCommand = 5;
     for (int i = 0; i < menuItems.size(); i++) {
       JMenuItem e = menuItems.get(i);
       e.setActionCommand("option" + Integer.toString(currentCommand));
@@ -103,7 +108,53 @@ public class Potatoshop {
 
     return menuBar;
   }
+  
+  /**
+   * Invert colours.
+   * 
+   */
+  private static class InvertColours implements ActionListener {
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+      for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
+          int argb = image.getRGB(i, j);
+          Color col = new Color(argb, true);
+          col = new Color(255 - col.getRed(), 255 - col.getGreen(), 255 - col.getBlue());
+          image.setRGB(i, j, col.getRGB());
+          ImageIcon imageIcon = new ImageIcon(image);
+          label1.setIcon(imageIcon);
+          container.setBackground(col);
+        }
+      }
+    }
+  }
+
+  /**
+   * Invert colours.
+   * 
+   */
+  private static class Grayscale implements ActionListener {
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+      for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
+          int argb = image.getRGB(i, j);
+          Color col = new Color(argb, true);
+          col = new Color((col.getRed() + col.getGreen() + col.getBlue()) / 3,
+              (col.getRed() + col.getGreen() + col.getBlue()) / 3,
+              (col.getRed() + col.getGreen() + col.getBlue()) / 3);
+          image.setRGB(i, j, col.getRGB());
+          ImageIcon imageIcon = new ImageIcon(image);
+          label1.setIcon(imageIcon);
+          container.setBackground(col);
+        }
+      }
+    }
+  }
+  
   private static class command implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
@@ -134,12 +185,6 @@ public class Potatoshop {
               System.out.println("Error: " + ec);
             }
           }
-          break;
-        case "option3":
-          invert(image);
-          break;
-        case "option4":
-          greyscale(image);
           break;
         case "option5":
           inverseH(image);
@@ -192,41 +237,8 @@ public class Potatoshop {
       }
     }
 
-    public static void invert(BufferedImage image) {
-
-      for (int i = 0; i < width; i++) {
-        for (int j = 0; j < height; j++) {
-          int argb = image.getRGB(i, j);
-          Color col = new Color(argb, true);
-          col = new Color(255 - col.getRed(), 255 - col.getGreen(), 255 - col.getBlue());
-          image.setRGB(i, j, col.getRGB());
-          ImageIcon imageIcon = new ImageIcon(image);
-          label1.setIcon(imageIcon);
-          container.setBackground(col);
-        }
-      }
-    }
-
-    public static void greyscale(BufferedImage image) {
-
-      for (int i = 0; i < width; i++) {
-        for (int j = 0; j < height; j++) {
-          int argb = image.getRGB(i, j);
-          Color col = new Color(argb, true);
-          col = new Color((col.getRed() + col.getGreen() + col.getBlue()) / 3,
-              (col.getRed() + col.getGreen() + col.getBlue()) / 3,
-              (col.getRed() + col.getGreen() + col.getBlue()) / 3);
-          image.setRGB(i, j, col.getRGB());
-          ImageIcon imageIcon = new ImageIcon(image);
-          label1.setIcon(imageIcon);
-          container.setBackground(col);
-        }
-      }
-    }
-
     public static void inverseH(BufferedImage image) {
-
-      BufferedImage inverse = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);;
+      BufferedImage inverse = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
       for (int i = 0; i < width; i++) {
         for (int j = 0; j < height; j++) {
           inverse.setRGB((width - i - 1), j, image.getRGB(i, j));

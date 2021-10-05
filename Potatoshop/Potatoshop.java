@@ -387,26 +387,19 @@ public class Potatoshop {
                 int b = col.getBlue();
                 int grey = (r + g + b) / 3;
                 r = g = b = grey;
-                r = r + (19 * 2); //adjusted colour values to seem more real as green (560nm) is more sensitive to human eye
-                g = g + 20;
-                if (r > 255) { //incase colours are out of bounds due to the adjustment
-                    r = 255;
-                }
-                if (r < 0) {
-                    r = 0;
-                }
-                if (g > 255) {
-                    g = 255;
-                }
-                if (g < 0) {
-                    g = 0;
-                }
-                if (b > 255) {
-                    b = 255;
-                }
-                if (b < 0) {
-                    b = 0;
-                }
+                r += (19 * 2); // adjusted colour values to seem more real as green (560nm) is more sensitive to human eye
+                g += 20;
+                
+                // Normalize Adjustments
+                // Negative values
+                r = (r < 0) ? 0 : r;
+                g = (g < 0) ? 0: g;
+                b = (b < 0) ? 0 : b;
+                // Exceedingly large values
+                r = (r > 255) ? 255 : r;
+                g = (g > 255) ? 255 : g;
+                b = (b > 255) ? 255 : b; 
+                
                 col = new Color(r, g, b);
                 image.setRGB(i, j, col.getRGB());
                 ImageIcon imageIcon = new ImageIcon(image);

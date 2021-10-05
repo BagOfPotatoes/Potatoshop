@@ -174,18 +174,8 @@ public class Potatoshop {
                 }
                 break;
             case "option11":
-                try {
-                    try {
-                        Thread.sleep(1500);
-                    } catch (InterruptedException ee) {
-                        System.out.println("No sleep");
-                    }
                     Runtime runtime = Runtime.getRuntime();
                     System.exit(0);
-                } catch (IOException eb) {
-                    System.out.println("Error: " + eb);
-                }
-                    break;
             default:
                 System.out.println("Yes");
                 break;

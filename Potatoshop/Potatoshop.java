@@ -31,6 +31,44 @@ public class Potatoshop {
         label1 = new JLabel(" ", SwingConstants.CENTER);
         label2 = new JLabel();
 
+        fileMenu.add(option1);
+        fileMenu.add(option2);
+        options.add(option3);
+        options.add(option4);
+        options.add(option5);
+        options.add(option6);
+        options.add(option7);
+        options.add(option8);
+        options.add(option9);
+        options.add(option10);
+        fileMenu.add(option11);
+        menuBar.add(fileMenu);
+        menuBar.add(options);
+        container.add(label1);
+        container.add(label2);
+        option1.setActionCommand("option1");
+        option1.addActionListener(new command());
+        option2.setActionCommand("option2");
+        option2.addActionListener(new command());
+        option3.setActionCommand("option3");
+        option3.addActionListener(new command());
+        option4.setActionCommand("option4");
+        option4.addActionListener(new command());
+        option5.setActionCommand("option5");
+        option5.addActionListener(new command());
+        option6.setActionCommand("option6");
+        option6.addActionListener(new command());
+        option7.setActionCommand("option7");
+        option7.addActionListener(new command());
+        option8.setActionCommand("option8");
+        option8.addActionListener(new command());
+        option9.setActionCommand("option9");
+        option9.addActionListener(new command());
+        option10.setActionCommand("option10");
+        option10.addActionListener(new command());
+        option11.setActionCommand("option11");
+        option11.addActionListener(new command());
+
         frame.setVisible(true);
         frame.add(container);
         frame.setJMenuBar(menuBar);
@@ -89,8 +127,11 @@ public class Potatoshop {
     menuItems.get(0).addActionListener(new InvertColours());
     menuItems.get(0).setActionCommand("invert_colours");
     
-    int currentCommand = 4;
-    for (int i = 1; i < menuItems.size(); i++) {
+    menuItems.get(1).addActionListener(new Greyscale());
+    menuItems.get(1).setActionCommand("greyscale");
+      
+    int currentCommand = 5;
+    for (int i = 2; i < menuItems.size(); i++) {
       JMenuItem e = menuItems.get(i);
       e.setActionCommand("option" + Integer.toString(currentCommand));
       e.addActionListener(new command());
@@ -127,6 +168,29 @@ public class Potatoshop {
     }
   }
     
+    
+  /**
+   * Greyscale.
+   * 
+   */
+  private static class Greyscale implements ActionListener {
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                int argb = image.getRGB(i, j);
+                Color col = new Color(argb, true);
+                col = new Color((col.getRed() + col.getGreen() + col.getBlue()) / 3, (col.getRed() + col.getGreen() + col.getBlue()) / 3, (col.getRed() + col.getGreen() + col.getBlue()) / 3);
+                image.setRGB(i, j, col.getRGB());
+                ImageIcon imageIcon = new ImageIcon(image);
+                label1.setIcon(imageIcon);
+                container.setBackground(col);
+            }
+        }
+    }
+  }
+    
     private static class command implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
@@ -158,12 +222,6 @@ public class Potatoshop {
                         }
                     }
                     break;
-            case "option3":
-                invert(image);
-                break;
-            case "option4":
-                greyscale(image);
-                break;
             case "option5":
                 inverseH(image);
                 break;
@@ -211,21 +269,6 @@ public class Potatoshop {
             default:
                 System.out.println("Yes");
                 break;
-        }
-    }
-
-    public static void greyscale(BufferedImage image) {
-
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                int argb = image.getRGB(i, j);
-                Color col = new Color(argb, true);
-                col = new Color((col.getRed() + col.getGreen() + col.getBlue()) / 3, (col.getRed() + col.getGreen() + col.getBlue()) / 3, (col.getRed() + col.getGreen() + col.getBlue()) / 3);
-                image.setRGB(i, j, col.getRGB());
-                ImageIcon imageIcon = new ImageIcon(image);
-                label1.setIcon(imageIcon);
-                container.setBackground(col);
-            }
         }
     }
 
